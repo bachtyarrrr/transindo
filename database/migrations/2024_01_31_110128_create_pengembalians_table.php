@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('eminjaman', function (Blueprint $table) {
+        Schema::create('pengembalians', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal_mulai');
-            $table->date('tanggal_selesai');
-            $table->unsignedBigInteger('mobil_id');
-            $table->unsignedBigInteger('user_id');
+            $table->string('nomor_plat');
+            $table->date('tanggal_kembali');
+            $table->unsignedBigInteger('jumlah_hari');
+            $table->decimal('biaya_sewa');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_peminjaman');
+        Schema::dropIfExists('pengembalians');
     }
 };

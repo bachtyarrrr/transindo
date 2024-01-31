@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pengembalians', function (Blueprint $table) {
+        Schema::create('mobils', function (Blueprint $table) {
             $table->id();
+            $table->string('merek');
+            $table->string('model');
             $table->string('nomor_plat');
-            $table->date('tanggal_kembali');
-            $table->unsignedBigInteger('jumlah_hari');
-            $table->decimal('biaya_sewa');
+            $table->unsignedBigInteger('tarif_sewa');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_pengembalians');
+        Schema::dropIfExists('mobils');
     }
 };

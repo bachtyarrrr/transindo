@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('sim');
             $table->string('email')->unique();
             $table->string('password');
-            $table->timestamp('email_verified_at')->now();
             $table->rememberToken();
             $table->timestamps();
         });
