@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Mobil;
 use App\Models\Peminjaman;
 use App\Models\Pengembalian;
+use App\Models\Rental;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -133,7 +134,7 @@ class CustomAuthController extends Controller
 
         $request->validate([
             'tanggal_mulai' => 'required|date',
-            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'tanggal_selesai' => 'required|date|after_or_equal:start_date',
             'mobil_id' => 'required|exists:mobils,id',
         ]);
 
@@ -144,30 +145,30 @@ class CustomAuthController extends Controller
         $tanggalMulai = $request->tanggal_mulai;
         $tanggalSelesai = $request->tanggal_selesai;
 
-        $mobilTersedia = DB::table('peminjaman')
+        $mobilTersedia = DB::table('rentals')
             ->where('mobil_id', $mobilId)
             ->where(function ($query) use ($tanggalMulai, $tanggalSelesai) {
                 $query->where(function ($query) use ($tanggalMulai, $tanggalSelesai) {
-                    $query->whereBetween('tanggal_mulai', [$tanggalMulai, $tanggalSelesai])
-                        ->orWhereBetween('tanggal_selesai', [$tanggalMulai, $tanggalSelesai]);
+                    $query->whereBetween('start_date', [$tanggalMulai, $tanggalSelesai])
+                        ->orWhereBetween('end_date', [$tanggalMulai, $tanggalSelesai]);
                 })
                     ->orWhere(function ($query) use ($tanggalMulai, $tanggalSelesai) {
-                        $query->where('tanggal_mulai', '<=', $tanggalMulai)
-                            ->where('tanggal_selesai', '>=', $tanggalSelesai);
+                        $query->where('start_date', '<=', $tanggalMulai)
+                            ->where('end_date', '>=', $tanggalSelesai);
                     });
             })
             ->exists();
 
         if (!$mobilTersedia) {
-            Peminjaman::create([
-                'tanggal_mulai' => $tanggalMulai,
-                'tanggal_selesai' => $tanggalSelesai,
+            Rental::create([
+                'start_date' => $tanggalMulai,
+                'end_date' => $tanggalSelesai,
                 'mobil_id' => $mobilId,
                 'user_id' => $userId,
             ]);
 
             $mobil = Mobil::all();
-            return view('userTask.main', compact('mobil'))->with('success', 'Peminjaman mobil berhasil!');
+            return view('userTask.index', compact('mobil'))->with('success', 'Peminjaman mobil berhasil!');
         } else {
             return redirect()->back()->with('error', 'Mobil tidak tersedia pada tanggal yang diminta.');
         }
@@ -183,7 +184,7 @@ class CustomAuthController extends Controller
 
     public function pengembalian()
     {
-        $mobilPeminjaman = Peminjaman::where('user_id', Auth::id())->get();
+        $mobilPeminjaman = Rental::where('user_id', Auth::id())->get();
 
 
         $mobilIds = $mobilPeminjaman->pluck('mobil_id')->toArray();
@@ -196,7 +197,7 @@ class CustomAuthController extends Controller
 
     public function daftar_pengembalian()
     {
-        $mobilPeminjaman = Peminjaman::where('user_id', Auth::id())->get();
+        $mobilPeminjaman = Rental::where('user_id', Auth::id())->get();
 
 
         $mobilIds = $mobilPeminjaman->pluck('mobil_id')->toArray();
@@ -206,7 +207,7 @@ class CustomAuthController extends Controller
         $pengembalians = Pengembalian::all();
         // $pengembalians = Pengembalian::where('user_id', Auth::id())->get();
 
-        return view('userTask.daftar-pengembalian', compact('pengembalians'));
+        return view('userTask.daftar-pengembalian', compact('pengembalians', 'mobil'));
     }
 
 
@@ -241,7 +242,7 @@ class CustomAuthController extends Controller
 
         $mobilId = Mobil::where('nomor_plat', $nomorPlat)->value('id');
 
-        Peminjaman::where('mobil_id', $mobilId)
+        Rental::where('mobil_id', $mobilId)
             ->where('user_id', auth()->id())
             ->delete();
         $mobil = Mobil::all();

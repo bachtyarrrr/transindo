@@ -53,8 +53,8 @@
                                 <td>{{ $p->model }}</td>
                                 <td>{{ $p->nomor_plat }}</td>
                                 <td>{{ $p->tarif_sewa }}</td>
-                                <td>{{ $p->tanggal_mulai }}</td>
-                                <td>{{ $p->tanggal_selesai }}</td>
+                                <td>{{ $p->start_date }}</td>
+                                <td>{{ $p->end_date }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -90,13 +90,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Tanggal Mulai <code>*</code></label>
-                                        <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai"
+                                        <input type="date" class="form-control" id="start_date" name="start_date"
                                             required>
                                     </div>
                                     <div class="form-group">
                                         <label>Tanggal Selesai <code>*</code></label>
-                                        <input type="date" class="form-control" id="tanggal_selesai"
-                                            name="tanggal_selesai" required>
+                                        <input type="date" class="form-control" id="end_date" name="end_date" required>
                                     </div>
                                     <!-- /.form-group -->
                                 </div>

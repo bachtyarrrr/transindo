@@ -14,9 +14,9 @@ use App\Http\Controllers\CustomAuthController;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-})->name('login');
+// Route::get('/', function () {
+//     return view('auth.login');
+// })->name('login');
 
 Route::get('dashboard', [CustomAuthController::class, 'dashboard']);
 Route::get('login', [CustomAuthController::class, 'index'])->name('login');
