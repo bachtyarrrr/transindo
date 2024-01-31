@@ -133,8 +133,8 @@ class CustomAuthController extends Controller
     {
 
         $request->validate([
-            'tanggal_mulai' => 'required|date',
-            'tanggal_selesai' => 'required|date|after_or_equal:start_date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
             'mobil_id' => 'required|exists:mobils,id',
         ]);
 
@@ -142,8 +142,8 @@ class CustomAuthController extends Controller
         $userId = Auth::id();
 
         $mobilId = $request->mobil_id;
-        $tanggalMulai = $request->tanggal_mulai;
-        $tanggalSelesai = $request->tanggal_selesai;
+        $tanggalMulai = $request->start_date;
+        $tanggalSelesai = $request->end_date;
 
         $mobilTersedia = DB::table('rentals')
             ->where('mobil_id', $mobilId)

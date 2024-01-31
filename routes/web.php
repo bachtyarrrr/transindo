@@ -34,4 +34,4 @@ Route::get('/pengembalian',  [CustomAuthController::class, 'daftar_pengembalian'
 Route::get('/daftar-pengembalian',  [CustomAuthController::class, 'daftar_pengembalian']);
 Route::post('/proses-pengembalian', [CustomAuthController::class, 'pengembalianMobil']);
 
-Route::post('/pesan-mobil', [CustomAuthController::class, 'pesanMobil']);
+Route::post('/pesan-mobil', [CustomAuthController::class, 'pesanMobil'])->name('rental.store');
