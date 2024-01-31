@@ -175,10 +175,10 @@ class CustomAuthController extends Controller
     public function daftar_sewa_user()
     {
         $userId = Auth::id();
-        $mobil = DB::table('peminjaman')
-            ->join('mobils', 'peminjaman.mobil_id', '=', 'mobils.id')
-            ->select('peminjaman.id', 'mobils.merek', 'mobils.model', 'mobils.nomor_plat', 'mobils.tarif_sewa', 'peminjaman.tanggal_mulai', 'peminjaman.tanggal_selesai')
-            ->where('peminjaman.user_id', $userId)
+        $mobil = DB::table('peminjamans')
+            ->join('mobils', 'peminjamans.mobil_id', '=', 'mobils.id')
+            ->select('peminjamans.id', 'mobils.merek', 'mobils.model', 'mobils.nomor_plat', 'mobils.tarif_sewa', 'peminjamans.tanggal_mulai', 'peminjamans.tanggal_selesai')
+            ->where('peminjamans.user_id', $userId)
             ->get();
 
         return view('userTask.sewa-user', compact('mobil'));
