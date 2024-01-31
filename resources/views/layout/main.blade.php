@@ -76,25 +76,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Pinjam Mobil</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="/daftar-sewa-user" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Daftar Sewa Saya</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/forms/general.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Pengembalian Mobil</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/forms/general.html" class="nav-link">
+                            <a href="/daftar-pengembalian" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Daftar Pengembalian Mobil</p>
                             </a>

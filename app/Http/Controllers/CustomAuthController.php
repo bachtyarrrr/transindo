@@ -175,16 +175,11 @@ class CustomAuthController extends Controller
     public function daftar_sewa_user()
     {
         $userId = Auth::id();
-        $mobil = DB::table('peminjamans')
-            ->join('mobils', 'peminjamans.mobil_id', '=', 'mobils.id')
-            ->select('peminjamans.id', 'mobils.merek', 'mobils.model', 'mobils.nomor_plat', 'mobils.tarif_sewa', 'peminjamans.tanggal_mulai', 'peminjamans.tanggal_selesai')
-            ->where('peminjamans.user_id', $userId)
-            ->get();
+        $mobil = Mobil::all();
+
 
         return view('userTask.sewa-user', compact('mobil'));
     }
-
-
 
     public function pengembalian()
     {
@@ -201,6 +196,13 @@ class CustomAuthController extends Controller
 
     public function daftar_pengembalian()
     {
+        $mobilPeminjaman = Peminjaman::where('user_id', Auth::id())->get();
+
+
+        $mobilIds = $mobilPeminjaman->pluck('mobil_id')->toArray();
+
+
+        $mobil = Mobil::whereIn('id', $mobilIds)->get();
         $pengembalians = Pengembalian::all();
         // $pengembalians = Pengembalian::where('user_id', Auth::id())->get();
 

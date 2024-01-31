@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Official Travel</h1>
+                    <h1 class="m-0">Penyewaan Mobil</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Official Travel</li>
+                        <li class="breadcrumb-item active">Penyewaan Mobil</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -26,7 +26,7 @@
             <!-- Small boxes (Stat box) -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Mobil</h3>
+                    <h3 class="card-title">Penyewaan Mobil</h3>
                     <button type="button" class="btn btn-primary text-white float-sm-right" data-toggle="modal"
                         data-target="#addModal">Sewa Mobil</button>
                 </div>

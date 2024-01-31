@@ -30,7 +30,7 @@ Route::post('proses_tambah', [CustomAuthController::class, 'proses_tambah']);
 Route::get('/cari-mobil',  [CustomAuthController::class, 'cari_mobil']);
 Route::get('/pinjam',  [CustomAuthController::class, 'pinjam_page']);
 Route::get('/daftar-sewa-user',  [CustomAuthController::class, 'daftar_sewa_user']);
-Route::get('/pengembalian',  [CustomAuthController::class, 'pengembalian']);
+Route::get('/pengembalian',  [CustomAuthController::class, 'daftar_pengembalian']);
 Route::get('/daftar-pengembalian',  [CustomAuthController::class, 'daftar_pengembalian']);
 Route::post('/proses-pengembalian', [CustomAuthController::class, 'pengembalianMobil']);
 

@@ -26,9 +26,9 @@
             <!-- Small boxes (Stat box) -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Mobil</h3>
+                    <h3 class="card-title">Daftar Sewa Mobil</h3>
                     <button type="button" class="btn btn-primary text-white float-sm-right" data-toggle="modal"
-                        data-target="#addModal">Sewa Mobil</button>
+                        data-target="#addModal">Pengembalian Mobil</button>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -36,25 +36,21 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Merek</th>
-                                <th>Model</th>
-                                <th>Nomor Plat</th>
-                                <th>Tarif Sewa / Hari</th>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Selesai</th>
+                                <th>No Plat</th>
+                                <th>Tanggal Kembali</th>
+                                <th>Jumlah Hari</th>
+                                <th>Biaya Sewa</th>
                             </tr>
                         </thead>
                         <tbody>
                             @php $no = 1; @endphp
-                            @foreach ($mobil as $p)
+                            @foreach ($pengembalians as $p)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $p->merek }}</td>
-                                <td>{{ $p->model }}</td>
                                 <td>{{ $p->nomor_plat }}</td>
-                                <td>{{ $p->tarif_sewa }}</td>
-                                <td>{{ $p->tanggal_mulai }}</td>
-                                <td>{{ $p->tanggal_selesai }}</td>
+                                <td>{{ $p->tanggal_kembali }}</td>
+                                <td>{{ $p->jumlah_hari }}</td>
+                                <td>{{ $p->biaya_sewa }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -71,7 +67,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Form Tambah Mobil</h4>
+                <h4 class="modal-title">Form Pengembalian Mobil</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -81,7 +77,7 @@
                 {{ session('error') }}
             </div>
             @endif
-            <form action="/pesan-mobil" method="POST">
+            <form action="/proses-pengembalian" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="card card-default">
@@ -89,14 +85,25 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Tanggal Mulai <code>*</code></label>
-                                        <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai"
-                                            required>
+                                        <label>Nomor Plat Mobil <code>*</code></label>
+                                        <select class="form-select @error('nomor_plat') is-invalid @enderror"
+                                            id="nomor_plat" name="nomor_plat" required>
+                                            @foreach($mobil as $m)
+                                            <option value="{{ $m->nomor_plat }}">{{ $m->merek }} - {{ $m->nomor_plat }}
+                                            </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Tanggal Selesai <code>*</code></label>
-                                        <input type="date" class="form-control" id="tanggal_selesai"
-                                            name="tanggal_selesai" required>
+                                        <label>Tanggal Kembali <code>*</code></label>
+                                        <input type="date"
+                                            class="form-control @error('tanggal_kembali') is-invalid @enderror"
+                                            id="tanggal_kembali" name="tanggal_kembali" required>
+                                        @error('tanggal_kembali')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                     <!-- /.form-group -->
                                 </div>
@@ -104,12 +111,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="mobil_id">Pilih Mobil <code>*</code></label>
-                                        <select class="form-control select2" id="mobil_id" name="mobil_id" required
-                                            style="width: 100%;">
-                                            @foreach($mobil as $m)
-                                            <option value="{{ $m->id }}">{{ $m->merek }} - {{ $m->nomor_plat }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="number"
+                                            class="form-control @error('jumlah_hari') is-invalid @enderror"
+                                            id="jumlah_hari" name="jumlah_hari" required>
+                                        @error('jumlah_hari')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <!-- /.col -->
